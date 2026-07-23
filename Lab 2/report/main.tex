@@ -290,18 +290,17 @@ computationally feasible, with the final optimized model retrained on the full
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{figures/sample_images.pdf}
+    \includegraphics[width=1\textwidth]{sample_images.pdf}
     \caption{Sample Fashion-MNIST Images}
     \label{fig:sample_images}
 \end{figure}
 \noindent\textbf{Inference:} Each of the ten classes is visually distinct even
 at $28 \times 28$ resolution, though some categories (e.g.\ Shirt, T-shirt/top,
-Pullover, and Coat) share similar silhouettes, foreshadowing the confusion
-between these classes seen later in the confusion matrix.
+Pullover, and Coat) share similar silhouettes.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{figures/class_distribution.pdf}
+    \includegraphics[width=1.1\textwidth]{ class_distribution.pdf}
     \caption{Class Distribution (Training Set)}
     \label{fig:class_distribution}
 \end{figure}
@@ -311,83 +310,79 @@ is a reliable metric here and no class-imbalance handling was required.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{figures/training_accuracy_vs_epoch.pdf}
+    \includegraphics[width=0.85\textwidth]{ training_accuracy_vs_epoch.pdf}
     \caption{Training Accuracy vs Epoch}
     \label{fig:train_acc}
 \end{figure}
 \noindent\textbf{Inference:} Training accuracy increases steadily and
 monotonically from 81.9\% to 93.4\% over 20 epochs, showing the model
-continues to fit the training data better at every epoch without stalling.
+continues to fit that the training data gets better at every epoch.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{figures/validation_accuracy_vs_epoch.pdf}
+    \includegraphics[width=0.85\textwidth]{ validation_accuracy_vs_epoch.pdf}
     \caption{Validation Accuracy vs Epoch}
     \label{fig:val_acc}
 \end{figure}
 \noindent\textbf{Inference:} Validation accuracy rises quickly in the first
 few epochs and then plateaus around 88--89\%, well below the training accuracy
-of 93\%+ by epoch 20 -- a clear sign of the model beginning to overfit the
-training set in later epochs.
+of 93\%+ by epoch 20. This shows that the model begins to overfit on the training set in the later epochs.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{figures/training_loss_vs_epoch.pdf}
+    \includegraphics[width=0.85\textwidth]{ training_loss_vs_epoch.pdf}
     \caption{Training Loss vs Epoch}
     \label{fig:train_loss}
 \end{figure}
 \noindent\textbf{Inference:} Training loss decreases smoothly and consistently
-from 0.50 to 0.17 across all 20 epochs, mirroring the training accuracy curve
-and confirming stable optimization with the Adam optimizer.
+from 0.50 to 0.17 across all 20 epochs, almost similar to the training accuracy curve. This confirms stable optimization with the Adam optimizer.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{figures/validation_loss_vs_epoch.pdf}
+    \includegraphics[width=0.85\textwidth]{ validation_loss_vs_epoch.pdf}
     \caption{Validation Loss vs Epoch}
     \label{fig:val_loss}
 \end{figure}
 \noindent\textbf{Inference:} Validation loss decreases until around epoch
-10--15 and then begins to creep back up (ending near 0.39), while training
-loss keeps falling -- the classic divergence pattern that confirms overfitting
+10--15 and then begins to increase(ending near 0.39), while training
+loss keeps decreasing. This is the classic divergence pattern that confirms overfitting
 in the later epochs.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{figures/confusion_matrix.pdf}
+    \includegraphics[width=0.75\textwidth]{ confusion_matrix.pdf}
     \caption{Confusion Matrix -- Baseline Model}
     \label{fig:confusion_baseline}
 \end{figure}
 \noindent\textbf{Inference:} Most confusion occurs between Shirt, T-shirt/top,
 Pullover, and Coat -- all upper-body garments with similar silhouettes at low
 resolution. Trouser, Sandal, Bag, and Ankle boot are classified almost
-perfectly, consistent with their more distinctive shapes.
+perfectly, consistent with their more unique shapes.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{figures/hyperparameter_search_results.pdf}
+    \includegraphics[width=0.85\textwidth]{ hyperparameter_search_results.pdf}
     \caption{Hyperparameter Search Results}
     \label{fig:search_results}
 \end{figure}
 \noindent\textbf{Inference:} Cross-validation accuracy varies noticeably across
-the 15 sampled candidates, ranging from noticeably weaker configurations up to
-the best candidate at 85.79\% mean CV accuracy, showing that hyperparameter
-choice has a real, measurable effect on model quality even on a subsampled
+the 15 sampled candidates, ranging from weak configurations up to the best candidate at 85.79\% mean CV accuracy, showing that the hyperparameter choice has a real, measurable effect on the model quality even on a subsampled
 training set.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{figures/best_model_comparison.pdf}
+    \includegraphics[width=0.75\textwidth]{ best_model_comparison.pdf}
     \caption{Best Model Accuracy Comparison}
     \label{fig:best_model_comparison}
 \end{figure}
 \noindent\textbf{Inference:} The optimized model outperforms the baseline on
 every metric (accuracy, precision, recall, and F1-score), though the margin is
-modest (under 0.4 percentage points), indicating the baseline architecture was
+slight (under 0.4 percentage points), indicating that the baseline architecture was
 already a reasonably strong choice for this dataset.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{figures/confusion_matrix_optimized.pdf}
+    \includegraphics[width=0.75\textwidth]{ confusion_matrix_optimized.pdf}
     \caption{Confusion Matrix -- Optimized Model (bonus)}
     \label{fig:confusion_optimized}
 \end{figure}
@@ -395,6 +390,18 @@ already a reasonably strong choice for this dataset.
 confusion pattern as the baseline (Shirt/T-shirt/Pullover/Coat remain the
 hardest to separate), but with slightly fewer total misclassifications,
 consistent with its marginally higher test accuracy.
+
+% ============================================================
+% SOURCE CODE
+% ============================================================
+\section{Source Code}
+The complete implementation, exactly as run in Colab, is hosted on GitHub.
+\\
+\url{https://github.com/smadhav2024/Deep_Learning_Lab/tree/main/Lab%202}
+\\
+The repository contains the full notebook \texttt{deep\_learning\_lab\_2.ipynb},
+the \texttt{requirements.txt} needed to run it, the raw \texttt{.eps} plots,
+and this report's Latex code.
 
 % ============================================================
 % 9. RESULTS
@@ -448,7 +455,7 @@ F1-score  & 0.8839 & 0.8868 \\
 \item \textbf{Which optimization method was used?}\\
 \texttt{RandomizedSearchCV} with 5-fold cross-validation was used, sampling 15
 candidate hyperparameter combinations from the full search space rather than
-exhaustively evaluating all of them.
+searching and evaluating all of them.
 
 \item \textbf{Which hyperparameters were selected?}\\
 The best configuration found was: 1 hidden layer of 128 neurons, sigmoid
@@ -456,11 +463,10 @@ activation, no dropout, the Adam optimizer with a learning rate of 0.001,
 a batch size of 128, and 30 training epochs.
 
 \item \textbf{Did optimization improve performance?}\\
-Yes, though modestly: test accuracy improved from 0.8836 (baseline) to 0.8871
+Yes, though slightly: test accuracy improved from 0.8836 (baseline) to 0.8871
 (optimized), with corresponding small gains in precision, recall, and
-F1-score. Interestingly, the optimized model uses a \emph{simpler} architecture
-(a single hidden layer) than the two-hidden-layer baseline, yet still performs
-slightly better -- showing that for this dataset, tuning the learning rate,
+F1-score. However, the optimized model used a simpler architecture(a single hidden layer) than the two-hidden-layer baseline, yet still performs
+slightly better, showing that for this dataset, tuning the learning rate,
 batch size, and training length mattered more than adding architectural depth.
 
 \item \textbf{Which hyperparameter had the greatest impact?}\\
@@ -468,18 +474,17 @@ Based on the spread seen in the hyperparameter search results plot
 (Figure~\ref{fig:search_results}), the learning rate and optimizer choice had
 the most visible impact on cross-validation accuracy -- configurations using a
 learning rate of 0.1 tended to perform considerably worse, likely due to
-unstable/overshooting weight updates, while learning rates of 0.001--0.01
+overshooting weight updates, while learning rates of 0.001--0.01
 paired with Adam or RMSProp consistently gave stronger results.
 
 \item \textbf{Compare Grid Search and Randomized Search.}\\
 Grid Search exhaustively evaluates every combination in the search space,
-guaranteeing the best combination \emph{within the grid} is found, but its
-cost grows multiplicatively with the number of hyperparameters and their
-candidate values -- infeasible here, since the full grid
+guaranteeing the best combination within the grid is found, but its
+cost grows eponentially with the number of hyperparameters and their
+candidate values which is infeasible here, since the full grid
 ($3\times4\times3\times4\times3\times3\times3\times3 = 34{,}992$ combinations)
 would require tens of thousands of model fits. Randomized Search instead
-samples a fixed number of combinations (15, here) from the same space,
-trading a guarantee of exhaustiveness for a search that completes in a
+samples a fixed number of combinations (15, here) from the same space,which completes in a
 practical amount of time, which is why it was the recommended and chosen
 method for this experiment.
 
@@ -499,8 +504,7 @@ also being computationally lighter than the two-hidden-layer baseline.
 This report includes the Objective, Background Theory, Dataset description,
 Experimental Procedure (Tasks 1--5), Hyperparameter Optimization methodology
 and search space, all mandatory Plots with inference, Results (best
-hyperparameters and performance comparison), Discussion, and References, as
-required by the lab manual.
+hyperparameters and performance comparison), Discussion, and References.
 
 % ============================================================
 % 12. REFERENCES
