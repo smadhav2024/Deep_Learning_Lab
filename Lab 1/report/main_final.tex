@@ -471,7 +471,83 @@ Epoch & Errors & Weight 1 (Variance) & Weight 2 (Skewness) & Weight 3 (Curtosis)
 
 %----------------------------------------------------------
 
-\section*{10. Discussion}
+\section*{10. Extension: Perceptron Learning for Logic Gates}
+
+As a follow-up to the main experiment, the same perceptron learning rule was applied to three classic logic gates -- AND, OR, and NOT -- to observe the weight updates directly on problems small enough to track by hand. Unlike the epoch-level logging used for the main banknote model, this extension records the weights and bias after \textit{every single update}, so the decision boundary can be visualized at each step of learning rather than only at the end of each epoch.
+
+\subsection*{AND Gate}
+
+\begin{verbatim}
+Update 1 (epoch 1) | input=[0 0] target=0 predicted=1 | weights=[0.  0. ] bias=-0.1
+Update 2 (epoch 1) | input=[1 1] target=1 predicted=0 | weights=[0.1 0.1] bias=0.0
+Update 3 (epoch 2) | input=[0 0] target=0 predicted=1 | weights=[0.1 0.1] bias=-0.1
+Update 4 (epoch 2) | input=[0 1] target=0 predicted=1 | weights=[0.1 0. ] bias=-0.2
+Update 5 (epoch 2) | input=[1 1] target=1 predicted=0 | weights=[0.2 0.1] bias=-0.1
+Update 6 (epoch 3) | input=[0 1] target=0 predicted=1 | weights=[0.2 0. ] bias=-0.2
+Update 7 (epoch 3) | input=[1 0] target=0 predicted=1 | weights=[0.1 0. ] bias=-0.3
+Update 8 (epoch 3) | input=[1 1] target=1 predicted=0 | weights=[0.2 0.1] bias=-0.2
+Converged after epoch 4 -- no updates needed.
+\end{verbatim}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{and_decision_boundary.pdf}
+\caption{AND Gate -- Decision Boundary After Each Update}
+\end{figure}
+\textbf{Observation:} The boundary starts undefined (zero weights cannot separate anything) and only becomes visible from Update 2 onward. Over 8 updates across 3 epochs, the line rotates and shifts until it isolates the single point $(1,1)$ from the other three inputs, matching the AND truth table exactly.
+
+\subsection*{OR Gate}
+
+\begin{verbatim}
+Update 1 (epoch 1) | input=[0 0] target=0 predicted=1 | weights=[0.  0. ] bias=-0.1
+Update 2 (epoch 1) | input=[0 1] target=1 predicted=0 | weights=[0.  0.1] bias=0.0
+Update 3 (epoch 2) | input=[0 0] target=0 predicted=1 | weights=[0.  0.1] bias=-0.1
+Update 4 (epoch 2) | input=[1 0] target=1 predicted=0 | weights=[0.1 0.1] bias=0.0
+Update 5 (epoch 3) | input=[0 0] target=0 predicted=1 | weights=[0.1 0.1] bias=-0.1
+Converged after epoch 4 -- no updates needed.
+\end{verbatim}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{or_decision_boundary.pdf}
+\caption{OR Gate -- Decision Boundary After Each Update}
+\end{figure}
+\textbf{Observation:} OR converges faster than AND -- only 5 updates across 3 epochs -- since separating a single point $(0,0)$ from the other three is a slightly easier boundary to find than isolating $(1,1)$. The final boundary keeps everything except the origin on the positive side.
+
+\subsection*{NOT Gate}
+
+\begin{verbatim}
+Update 1 (epoch 1) | input=[1] target=0 predicted=1 | weights=[-0.1] bias=-0.1
+Update 2 (epoch 2) | input=[0] target=1 predicted=0 | weights=[-0.1] bias=0.0
+Converged after epoch 3 -- no updates needed.
+\end{verbatim}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{not_decision_boundary.pdf}
+\caption{NOT Gate -- Decision Boundary After Each Update}
+\end{figure}
+\textbf{Observation:} With only a single input feature and two possible values, NOT converges in just 2 updates -- the fastest of the three gates. The final boundary sits at $x_1 = 0$, correctly flipping 0 to 1 and 1 to 0.
+
+\begin{table}[H]
+\centering
+\caption{Final Weights -- Logic Gate Perceptrons}
+\begin{tabular}{lccc}
+\toprule
+Gate & Final Weights & Final Bias & Updates to Converge \\
+\midrule
+AND & $[0.2,\ 0.1]$ & $-0.2$ & 8 \\
+OR  & $[0.1,\ 0.1]$ & $-0.1$ & 5 \\
+NOT & $[-0.1]$ & $0.0$ & 2 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+All three gates are linearly separable, so the single layer perceptron converges cleanly on each one -- a direct contrast to the XOR case discussed in Section 7, where no such convergence is possible.
+
+%----------------------------------------------------------
+
+\section*{11. Discussion}
 
 This experiment provides a clear, practical demonstration of how a perceptron learns, beyond the theoretical formulation alone. The model reached 98.55\% accuracy with perfect recall on the test set, consistent with the EDA pairplot, which suggested the dataset is close to linearly separable -- explaining why a simple linear model such as the perceptron performs well on it.
 
@@ -487,7 +563,7 @@ Several noticeale observations were :
 
 %----------------------------------------------------------
 
-\section*{11. Conclusion}
+\section*{12. Conclusion}
 
 \begin{itemize}[leftmargin=*]
 \item Built a Single Layer Perceptron completely from scratch in NumPy and trained it on the real-world Banknote Authentication dataset.
@@ -500,7 +576,7 @@ Several noticeale observations were :
 
 %----------------------------------------------------------
 
-\section*{12. References}
+\section*{13. References}
 
 \begin{enumerate}
 \item F. Rosenblatt, ``The Perceptron,'' \emph{Psychological Review}, 1958.
