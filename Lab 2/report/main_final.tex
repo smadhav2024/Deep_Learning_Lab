@@ -446,6 +446,123 @@ F1-score  & 0.8839 & 0.8868 \\
 \end{table}
 
 % ============================================================
+% ADDITIONAL TASK (K4): PERCEPTRON LEARNING ALGORITHM FOR XOR
+% (placed after Results, before Discussion, as requested)
+% ============================================================
+\section{Additional Task (K4): Perceptron Learning Algorithm for the XOR Gate}
+
+\subsection*{Objective}
+The perceptron learning algorithm was implemented from scratch in Python for
+the XOR logic gate. The weights were logged after every update, the decision
+boundary was plotted after each weight update, and the pattern that prevents
+the single-layer perceptron from converging on XOR was analyzed.
+
+\subsection*{Implementation}
+A single-layer perceptron with two input weights and a bias was trained on the
+XOR truth table using the standard perceptron update rule:
+\begin{equation}
+    w \leftarrow w + \eta\,(t - \hat{y})\,x, \qquad b \leftarrow b + \eta\,(t - \hat{y})
+\end{equation}
+where $\hat{y} = \mathrm{step}(w \cdot x + b)$, $t$ is the target output, and
+$\eta = 0.1$ is the learning rate. Weights and bias were initialized to zero
+and the perceptron was trained for 5 epochs over the 4 XOR samples
+$\{(0,0){\to}0,\ (0,1){\to}1,\ (1,0){\to}1,\ (1,1){\to}0\}$, with a weight
+update logged and the weight/bias state recorded every time a sample was
+misclassified.
+
+\subsection*{Weights After Each Update}
+
+\begin{table}[H]
+\centering
+\small
+\caption{Perceptron Weight Updates on the XOR Gate ($\eta = 0.1$, initial $w = [0,0]$, $b = 0$)}
+\begin{tabular}{@{}cccccccc@{}}
+\toprule
+\textbf{Update} & \textbf{Epoch} & \textbf{Input} & \textbf{Target} & \textbf{Predicted} & \textbf{$w_1$} & \textbf{$w_2$} & \textbf{Bias} \\
+\midrule
+1  & 1 & (0,0) & 0 & 1 & 0.0000  & 0.0000 & $-0.1000$ \\
+2  & 1 & (0,1) & 1 & 0 & 0.0000  & 0.1000 & 0.0000 \\
+3  & 1 & (1,1) & 0 & 1 & $-0.1000$ & 0.1000 & $-0.1000$ \\
+4  & 2 & (0,1) & 1 & 0 & $-0.1000$ & 0.1000 & 0.0000 \\
+5  & 2 & (1,0) & 1 & 0 & 0.0000  & 0.1000 & 0.1000 \\
+6  & 2 & (1,1) & 0 & 1 & $-0.1000$ & 0.1000 & 0.0000 \\
+7  & 3 & (0,0) & 0 & 1 & $-0.1000$ & 0.1000 & $-0.1000$ \\
+8  & 3 & (0,1) & 1 & 0 & $-0.1000$ & 0.1000 & 0.0000 \\
+9  & 3 & (1,0) & 1 & 0 & 0.0000  & 0.1000 & 0.1000 \\
+10 & 3 & (1,1) & 0 & 1 & $-0.1000$ & 0.1000 & 0.0000 \\
+11 & 4 & (0,0) & 0 & 1 & $-0.1000$ & 0.1000 & $-0.1000$ \\
+12 & 4 & (0,1) & 1 & 0 & $-0.1000$ & 0.1000 & 0.0000 \\
+13 & 4 & (1,0) & 1 & 0 & 0.0000  & 0.1000 & 0.1000 \\
+14 & 4 & (1,1) & 0 & 1 & $-0.1000$ & 0.1000 & 0.0000 \\
+15 & 5 & (0,0) & 0 & 1 & $-0.1000$ & 0.1000 & $-0.1000$ \\
+16 & 5 & (0,1) & 1 & 0 & $-0.1000$ & 0.1000 & 0.0000 \\
+17 & 5 & (1,0) & 1 & 0 & 0.0000  & 0.1000 & 0.1000 \\
+18 & 5 & (1,1) & 0 & 1 & $-0.1000$ & 0.1000 & 0.0000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent Note that from Update~4 onward the weight/bias state simply repeats
+the same 4-update cycle
+$(-0.1,0.1,0.0) \to (0.0,0.1,0.1) \to (-0.1,0.1,0.0) \to (-0.1,0.1,-0.1) \to \dots$
+every epoch, and the number of misclassifications per epoch was
+$[3,\,3,\,4,\,4,\,4]$ over the 5 epochs -- it never drops to 0, i.e.\ the
+perceptron never converges.
+
+\subsection*{Decision Boundary Evolution}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.1\textwidth]{xor_decision_boundary_evolution.eps}
+    \caption{XOR Decision Boundary After Each of the 18 Weight Updates (Update 0 = initial state)}
+    \label{fig:xor_boundary}
+\end{figure}
+\noindent\textbf{Inference:} The decision boundary line visibly rotates and
+shifts after every update, moving to correct whichever point was just
+misclassified. However, no single straight-line boundary manages to
+place all the four XOR points on their correct sides simultaneously. The
+boundary keeps going after the errors from one update to the next without ever
+settling.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{xor_training_error.eps}
+    \caption{Perceptron Trained on XOR -- Non-Convergence}
+    \label{fig:xor_error}
+\end{figure}
+\noindent\textbf{Inference:} The number of misclassified samples per epoch
+($3, 3, 4, 4, 4$) never reaches zero and does not trend downward -- after
+epoch 2 it stabilizes at 4 out of 4 samples misclassified at every epoch. This confirms that the perceptron has entered a permanent error cycle rather than
+converging.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{xor_weight_evolution.eps}
+    \caption{XOR Weight and Bias Evolution Over Updates}
+    \label{fig:xor_weights}
+\end{figure}
+\noindent\textbf{Inference:} After the initial updates (Updates 1--3), both
+weights and the bias settle into a repeating oscillation between a small set
+of fixed values instead of converging to a stable point. The direct numerical
+evidence of the cyclical, non-convergent behaviour can be seen in
+Figure~\ref{fig:xor_error}.
+
+\subsection*{Analysis: Why the Perceptron Never Converges on XOR}
+The pattern responsible for this non-convergence is that \textbf{XOR is not
+linearly separable}. The two positive samples $(0,1)$ and $(1,0)$ and the two
+negative samples $(0,0)$ and $(1,1)$ cannot be separated by any single
+straight line in the 2D input space -- they form two pairs of diagonally
+opposite corners of the unit square, so any line that correctly separates one
+pair of opposite corners necessarily misclassifies the other pair. Every
+weight update in Figure~\ref{fig:xor_boundary} rotates or shifts the boundary
+to fix whichever point was just misclassified, but doing so always breaks a
+different point that was previously correct, since no orientation of a single
+straight line can keep all four points on their correct sides at once. This
+is exactly why solving XOR requires at least one hidden layer, combining multiple linear boundaries
+produces a non-linear decision region that a single-layer perceptron, limited
+to one straight-line boundary, can never represent.
+
+% ============================================================
 % 10. DISCUSSION
 % ============================================================
 \section{Discussion}
@@ -453,7 +570,7 @@ F1-score  & 0.8839 & 0.8868 \\
 \begin{enumerate}[label=\arabic*.]
 
 \item \textbf{Which optimization method was used?}\\
-\texttt{RandomizedSearchCV} with 5-fold cross-validation was used, sampling 15
+RandomizedSearchV with 5-fold cross-validation was used, sampling 15
 candidate hyperparameter combinations from the full search space rather than
 searching and evaluating all of them.
 
@@ -504,7 +621,8 @@ also being computationally lighter than the two-hidden-layer baseline.
 This report includes the Objective, Background Theory, Dataset description,
 Experimental Procedure (Tasks 1--5), Hyperparameter Optimization methodology
 and search space, all mandatory Plots with inference, Results (best
-hyperparameters and performance comparison), Discussion, and References.
+hyperparameters and performance comparison), the Additional Task (K4:
+Perceptron Learning Algorithm for the XOR Gate), Discussion, and References.
 
 % ============================================================
 % 12. REFERENCES
