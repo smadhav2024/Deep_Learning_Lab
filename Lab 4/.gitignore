@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Jupyter / Colab
+.ipynb_checkpoints/
+
+# LaTeX auxiliary files
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.bbl
+*.blg
+*.nav
+*.snm
+*.vrb
+report/*-eps-converted-to.pdf
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Dataset cache (if downloaded locally instead of Colab)
+*.npz
+cifar-10-batches-py/
+
+# Pretrained model weight cache (VGG16 ImageNet weights, ~500MB, re-downloaded automatically)
+*.h5
+.keras/
