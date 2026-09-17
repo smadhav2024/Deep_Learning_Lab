@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Jupyter / Colab / Kaggle
+.ipynb_checkpoints/
+
+# LaTeX auxiliary files
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.bbl
+*.blg
+*.nav
+*.snm
+*.vrb
+report/*-eps-converted-to.pdf
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Dataset cache (tensorflow_datasets downloads/caches locally on first run)
+tensorflow_datasets/
+*.tfrecord*
+
+# Pretrained model weight cache (MobileNetV2 ImageNet weights, re-downloaded automatically)
+*.h5
+*.weights.h5
+.keras/
+
+# Disk-cached tf.data pipelines used during training
+cache/
