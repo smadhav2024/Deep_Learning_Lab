@@ -1,0 +1,33 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Downloaded / cached dataset (fetched fresh by the notebook)
+mnist.npz
+CS3807_Exp7_Data/
+
+# Plot exports (kept in report/figures/ and plots/ once finalized, not the raw working copy)
+Exp7_Plot_Exports/
+Exp7_Plot_Exports.zip
+
+# LaTeX build artifacts
+report/*.aux
+report/*.log
+report/*.out
+report/*.toc
+report/*.synctex.gz
+report/*.fls
+report/*.fdb_latexmk
